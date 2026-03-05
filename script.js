@@ -12,6 +12,24 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
     navMenu.classList.remove('active');
 }));
 
+// Language Switcher Toggle
+const langSwitcher = document.querySelector('.lang-switcher');
+const langToggle = document.querySelector('.lang-toggle');
+
+if (langToggle) {
+    langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langSwitcher.classList.toggle('open');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!langSwitcher.contains(e.target)) {
+            langSwitcher.classList.remove('open');
+        }
+    });
+}
+
 // Header Scroll Effect
 const header = document.getElementById('header');
 
@@ -52,8 +70,11 @@ revealOnScroll();
 // Code Typewriter Animation
 const codeElement = document.getElementById('typewriter-text');
 
+// Detect language based on URL
+const isEnglish = window.location.pathname.includes('/en/');
+
 if (codeElement) {
-    const codeSnippet = [
+    const codeSnippetPT = [
         { text: "const ", class: "token-keyword" },
         { text: "suaEmpresa ", class: "token-variable" },
         { text: "= {\n", class: "" },
@@ -75,6 +96,31 @@ if (codeElement) {
         { text: "'Sucesso Garantido'", class: "token-string" },
         { text: ";\n}", class: "" }
     ];
+
+    const codeSnippetEN = [
+        { text: "const ", class: "token-keyword" },
+        { text: "yourBusiness ", class: "token-variable" },
+        { text: "= {\n", class: "" },
+        { text: "  goals: ", class: "token-variable" },
+        { text: "[\n", class: "" },
+        { text: "    'Attract Clients'", class: "token-string" },
+        { text: ",\n", class: "" },
+        { text: "    'Sell More'", class: "token-string" },
+        { text: ",\n", class: "" },
+        { text: "    'Automate'", class: "token-string" },
+        { text: "\n  ],\n", class: "" },
+        { text: "  partner: ", class: "token-variable" },
+        { text: "'ZettaNext'", class: "token-string" },
+        { text: "\n};\n\n", class: "" },
+        { text: "function ", class: "token-keyword" },
+        { text: "transformFuture", class: "token-function" },
+        { text: "() {\n", class: "" },
+        { text: "  return ", class: "token-keyword" },
+        { text: "'Guaranteed Success'", class: "token-string" },
+        { text: ";\n}", class: "" }
+    ];
+
+    const codeSnippet = isEnglish ? codeSnippetEN : codeSnippetPT;
 
     let currentTokenIndex = 0;
     let currentCharIndex = 0;
@@ -153,7 +199,7 @@ if (contactForm) {
 
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.textContent;
-        submitButton.textContent = 'Enviando...';
+        submitButton.textContent = isEnglish ? 'Sending...' : 'Enviando...';
         submitButton.disabled = true;
 
         try {
@@ -172,7 +218,9 @@ if (contactForm) {
                 formMessage.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
                 formMessage.style.border = '1px solid rgba(34, 197, 94, 0.3)';
                 formMessage.style.color = '#22c55e';
-                formMessage.textContent = '✓ Mensagem enviada com sucesso! Entraremos em contato em breve.';
+                formMessage.textContent = isEnglish
+                    ? '✓ Message sent successfully! We will contact you soon.'
+                    : '✓ Mensagem enviada com sucesso! Entraremos em contato em breve.';
                 contactForm.reset();
             } else {
                 const data = await response.json();
@@ -186,7 +234,9 @@ if (contactForm) {
             formMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
             formMessage.style.border = '1px solid rgba(239, 68, 68, 0.3)';
             formMessage.style.color = '#ef4444';
-            formMessage.textContent = '✗ Erro ao enviar mensagem. Tente novamente ou entre em contato pelo WhatsApp.';
+            formMessage.textContent = isEnglish
+                ? '✗ Error sending message. Please try again or contact us via WhatsApp.'
+                : '✗ Erro ao enviar mensagem. Tente novamente ou entre em contato pelo WhatsApp.';
         } finally {
             submitButton.textContent = originalButtonText;
             submitButton.disabled = false;

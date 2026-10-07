@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io">
     <title>Fale Conosco | ZettaNext Tecnologia</title>
     <meta property="og:site_name" content="ZettaNext Tecnologia">
     <link rel="icon" href="ICONE.png" type="image/png">
@@ -91,33 +93,39 @@
                         </div>
 
                         <div class="social-links" style="margin-top: auto;">
-                            <a href="https://www.instagram.com/zettanext_/" target="_blank"><i
+                            <a href="https://www.instagram.com/zettanext_/" target="_blank" rel="noopener noreferrer"><i
                                     class="fab fa-instagram"></i></a>
                             <a href="https://www.linkedin.com/company/zettanext-tecnologia/?viewAsMember=true"
-                                target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="https://api.whatsapp.com/send?phone=5511968562700" target="_blank"><i
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone=5511968562700" target="_blank" rel="noopener noreferrer"><i
                                     class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
 
-                    <form id="contact-form" class="contact-form" method="POST">
+                    <form id="contact-form" class="contact-form" method="POST" autocomplete="on">
                         <h3>Solicite um Orçamento</h3>
                         <p style="margin-bottom: 20px; color: var(--text-secondary);">Conte-nos sobre sua necessidade.
                         </p>
 
+                        <!-- Honeypot anti-spam: humanos não veem, bots preenchem -->
+                        <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+                            <label for="company_website">Não preencha este campo</label>
+                            <input type="text" id="company_website" name="_gotcha" tabindex="-1" autocomplete="off">
+                        </div>
+
                         <div class="form-group">
                             <label for="name">Nome Completo</label>
-                            <input type="text" id="name" name="name" required placeholder="Digite seu nome">
+                            <input type="text" id="name" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder="Digite seu nome">
                         </div>
 
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                            <input type="email" id="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" placeholder="seu@email.com">
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Telefone / WhatsApp</label>
-                            <input type="tel" id="phone" name="phone" required placeholder="(XX) XXXXX-XXXX">
+                            <input type="tel" id="phone" name="phone" required minlength="8" maxlength="30" autocomplete="tel" inputmode="tel" placeholder="(XX) XXXXX-XXXX">
                         </div>
 
                         <div class="form-group">
@@ -136,7 +144,7 @@
 
                         <div class="form-group">
                             <label for="message">Detalhes do Projeto</label>
-                            <textarea id="message" name="message" rows="5" required
+                            <textarea id="message" name="message" rows="5" required minlength="10" maxlength="2000"
                                 placeholder="Como podemos ajudar? Fale sobre funcionalidades, prazos, etc."></textarea>
                         </div>
 
